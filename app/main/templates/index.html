@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự đoán loài hoa Iris</title>
+    <link rel="stylesheet" href="{{ url_for('main.static', filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('main.static', filename='css/style.css') }}">
+    <style>
+
+    </style>
+</head>
+<body>
+    <h1>🌸 Chào mừng bạn đến với ứng dụng Dự đoán Iris</h1>
+
+    <form id="iris-form">
+        <label>Sepal Length (cm): <input type="range" id="sepal_length" min="4.0" max="8.0" step="0.1" value="5.9"></label>
+        <label>Sepal Width (cm): <input type="range" id="sepal_width" min="2.0" max="4.5" step="0.1" value="3.0"></label>
+        <label>Petal Length (cm): <input type="range" id="petal_length" min="1.0" max="7.0" step="0.1" value="5.1"></label>
+        <label>Petal Width (cm): <input type="range" id="petal_width" min="0.1" max="2.5" step="0.1" value="1.8"></label>
+        <button type="submit">🌼 Dự đoán ngay</button>
+    </form>
+
+    <h2 id="result">🌺 Kết quả dự đoán sẽ hiển thị ở đây</h2>
+    <img id="flower-img" src="{{ url_for('main.static', filename='images/default.jpg') }}" alt="Ảnh loài hoa" style="max-width: 300px;"/>
+
+    <script>
+        document.getElementById("iris-form").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const features = [
+                parseFloat(document.getElementById("sepal_length").value),
+                parseFloat(document.getElementById("sepal_width").value),
+                parseFloat(document.getElementById("petal_length").value),
+                parseFloat(document.getElementById("petal_width").value)
+            ];
+
+            const response = await fetch("http://127.0.0.1:5000/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ features: features })
+            });
+
+            const result = await response.json();
+
+            console.log(document.getElementById("flower-img"))
+
+            if (result.prediction) {
+                document.getElementById("result").innerText = "🌺 Kết quả dự đoán: " + result.prediction;
+                document.getElementById("flower-img").src = "{{ url_for('main.static', filename='images/') }}" + result.prediction.split("-")[1].toLowerCase() + ".jpg";
+            } else {
+                alert("Lỗi khi dự đoán!");
+            }
+        });
+    </script>
+</body>
+</html>
