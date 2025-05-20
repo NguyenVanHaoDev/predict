@@ -1,10 +1,11 @@
 import os
 import pickle
+from app.main import main_bp
 
 # Đường dẫn thư mục chứa mô hình và scaler
-MODEL_DIR = 'PKL'
-MODEL_FILE = os.path.join(MODEL_DIR, 'randomforestmodel.pkl')
-SCALER_FILE = os.path.join(MODEL_DIR, 'scaler.pkl')
+MODEL_DIR = os.path.join(main_bp.root_path, main_bp.static_folder,'PKL')
+MODEL_FILE = os.path.join(main_bp.root_path, main_bp.static_folder,'PKL', 'randomforestmodel.pkl')
+SCALER_FILE = os.path.join(main_bp.root_path, main_bp.static_folder,'PKL', 'scaler.pkl')
 
 
 def save_model(model, scaler):

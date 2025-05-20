@@ -1,13 +1,14 @@
 import streamlit as st
 import os
-import numpy as np
-from model_utils import load_model, load_scaler
+from app.model_utils import load_model, load_scaler
+from app.main import main_bp
 
 
 # Hàm dự đoán
 def predict_species(features):
     model = load_model()
     scaler = load_scaler()
+
 
     if model is None or scaler is None:
         return "Lỗi khi tải mô hình hoặc scaler."
@@ -21,7 +22,8 @@ def predict_species(features):
 
 # Đường dẫn thư mục chứa ảnh, lấy từ thư mục hiện tại + thư mục images
 # IMAGE_DIR = os.path.join(os.path.dirname(__file__), 'images')
-IMAGE_DIR = os.path.join(os.getcwd(), 'images')
+IMAGE_DIR = os.path.join(main_bp.root_path, main_bp.static_folder, 'images')
+
 
 # Dictionary lưu link ảnh tương ứng với loại hoa
 image_paths = {
@@ -53,14 +55,6 @@ st.markdown(
         font-size: 36px;
         font-weight: bold;
     }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    """
-    <style>
     img {
         border-radius: 15px;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);

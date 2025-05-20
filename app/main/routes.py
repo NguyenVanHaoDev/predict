@@ -1,6 +1,5 @@
-from flask import render_template
-from flask import Flask, request, jsonify, render_template
-from model_utils import load_model, load_scaler
+from flask import request, jsonify, render_template
+from app.model_utils import load_model, load_scaler
 from . import main_bp
 
 @main_bp.route('/')

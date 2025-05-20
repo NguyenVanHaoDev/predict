@@ -12,7 +12,7 @@ from sklearn.metrics import confusion_matrix
 # from sklearn.externals import joblib
 print('Libraries Imported')
 #Creating Dataset and including the first row by setting no header as input
-dataset = pd.read_csv('data/iris.data.csv', header = None, skiprows = 1)
+dataset = pd.read_csv('../data/iris.data.csv', header = None, skiprows = 1)
 #Renaming the columns
 dataset.columns = ['sepal length in cm', 'sepal width in cm','petal length in cm','petal width in cm','species']
 print('Shape of the dataset: ' + str(dataset.shape))
