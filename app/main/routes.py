@@ -4,6 +4,7 @@ from . import main_bp
 
 @main_bp.route('/')
 def index():
+    print("check")
     return render_template('index.html')
 
 @main_bp.route('/predict', methods=['POST'])
